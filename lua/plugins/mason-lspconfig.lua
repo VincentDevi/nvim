@@ -7,7 +7,8 @@ return {
 		"rust_analyzer",
 		"tsserver",
 		"tailwindcss",
-		"gopls"
+		"gopls",
+		"htmx"
 	},
     })
     end,
