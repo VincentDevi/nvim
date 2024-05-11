@@ -27,6 +27,7 @@ return {
 			vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, vim.tbl_deep_extend("force", opts, { desc = "LSP Hover" }))
 
 		end)
+		-- Rust LSP configuration -- 
 		vim.g.rustaceanvim = {
   			server = {
     				capabilities = lsp_zero.get_capabilities()
