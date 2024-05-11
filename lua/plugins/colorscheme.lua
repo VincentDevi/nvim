@@ -9,6 +9,6 @@ return{
 	require("catppuccin").setup({
 		transparent_background = true
 	})
-	end, 
+	end,
 }
 

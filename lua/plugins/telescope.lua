@@ -7,7 +7,6 @@ return {
      },
 
      	config=function()
-		
      	local builtin = require('telescope.builtin')
 	local keymap = vim.keymap
 

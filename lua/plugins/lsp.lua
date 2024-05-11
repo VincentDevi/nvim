@@ -3,11 +3,12 @@ return {
 	branch = 'v3.x',
   	dependencies = {
 		"neovim/nvim-lspconfig",
+		"lvimuser/lsp-inlayhints.nvim",
 		{
       		"williamboman/mason.nvim",
       			build = function()
-        		pcall(vim.cmd, "MasonUpdate")
-      		end,
+        			pcall(vim.cmd, "MasonUpdate")
+      			end,
    		 },
 		"hrsh7th/cmp-nvim-lsp",
 		"williamboman/mason-lspconfig.nvim",
@@ -37,7 +38,7 @@ return {
       				['rust-analyzer'] = {
 					check = {
 						command = "clippy"
-					}
+					},
       				},
     			},
 		}
