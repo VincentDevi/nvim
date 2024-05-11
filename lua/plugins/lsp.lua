@@ -13,13 +13,33 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		"hrsh7th/nvim-cmp",
 		"L3MON4D3/LuaSnip",
+		{
+  			"mrcjkb/rustaceanvim",
+  			version = '^4', -- Recommended
+  			lazy = false, -- This plugin is already lazy
+		},
 	},
 	config = function()
 		local lsp_zero = require("lsp-zero")
 
 		lsp_zero.on_attach(function(client, bufnr)
       		local opts = { buffer = bufnr, remap = false }
+			vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, vim.tbl_deep_extend("force", opts, { desc = "LSP Hover" }))
+
 		end)
+		vim.g.rustaceanvim = {
+  			server = {
+    				capabilities = lsp_zero.get_capabilities()
+  			},
+			default_settings = {
+     			 -- rust-analyzer language server configuration
+      				['rust-analyzer'] = {
+					check = {
+						command = "clippy"
+					}
+      				},
+    			},
+		}
 		require("mason").setup()
 		require("mason-lspconfig").setup({
 			ensure_installed = {
@@ -32,6 +52,7 @@ return {
 			},
 			handlers={
 				lsp_zero.default_setup,
+				rust_analyzer = lsp_zero.noop,
 			}
     		})
 	end,
