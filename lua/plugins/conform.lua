@@ -16,7 +16,6 @@ return {
 			desc = "Format buffer",
 		},
 	},
-	-- Everything in opts will be passed to setup()
 	opts = {
 		-- Define your formatters
 		formatters_by_ft = {
