@@ -15,7 +15,7 @@ return {
 		"L3MON4D3/LuaSnip",
 		{
 			"mrcjkb/rustaceanvim",
-			version = "^4", -- Recommended
+			version = "^4",
 			lazy = false, -- This plugin is already lazy
 		},
 	},
@@ -52,6 +52,7 @@ return {
 				"tailwindcss",
 				"gopls",
 				"htmx",
+				"svelte",
 			},
 			handlers = {
 				lsp_zero.default_setup,
