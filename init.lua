@@ -15,6 +15,6 @@ require("keymaps")
 require("lazy").setup({
 	{ import = "plugins" },
 })
-
+vim.wo.number = true
 vim.cmd.colorscheme("catppuccin")
 vim.lsp.inlay_hint.enable(true, nil)
