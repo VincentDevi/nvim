@@ -17,6 +17,6 @@ require("lazy").setup({
 })
 
 vim.cmd.colorscheme "catppuccin"
-
+vim.lsp.inlay_hint.enable(true,nil)
 
 

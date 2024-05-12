@@ -29,6 +29,7 @@ return {
 
 		end)
 		-- Rust LSP configuration -- 
+
 		vim.g.rustaceanvim = {
   			server = {
     				capabilities = lsp_zero.get_capabilities()
