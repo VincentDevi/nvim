@@ -16,6 +16,10 @@ return {
 				"tmux",
 				"typescript",
 				"haskell",
+				"vim",
+				"bash",
+				"markdown_inline",
+				"markdown",
 			},
 		})
 	end,
