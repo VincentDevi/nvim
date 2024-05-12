@@ -1,19 +1,17 @@
--- plugins/telescope.lua:
 return {
-	"nvim-telescope/telescope.nvim",
-	tag = "0.1.6",
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-	},
-
+	"ThePrimeagen/harpoon",
+	branch = "harpoon2",
+	dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
 	config = function()
-		local builtin = require("telescope.builtin")
-		local keymap = vim.keymap
-
-		keymap.set("n", "<leader>ff", builtin.find_files, {})
-		keymap.set("n", "<leader>fg", builtin.live_grep, {})
-		keymap.set("n", "<leader>fb", builtin.buffers, {})
-		keymap.set("n", "<leader>fh", builtin.help_tags, {})
+		local harpoon = require("harpoon")
+		harpoon.setup({})
+		-- Keymap --
+		vim.keymap.set("n", "<leader>a", function()
+			harpoon:list():add()
+		end)
+		vim.keymap.set("n", "<leader>l", function()
+			harpoon.ui:toggle_quick_menu(harpoon:list())
+		end)
 		-- basic telescope configuration
 		local conf = require("telescope.config").values
 		local function toggle_telescope(harpoon_files)
