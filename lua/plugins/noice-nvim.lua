@@ -26,5 +26,8 @@ return {
 				opts = {}, -- global options for the cmdline. See section on views
 			},
 		})
+		require("notify").setup({
+			background_colour = "#000000",
+		})
 	end,
 }
