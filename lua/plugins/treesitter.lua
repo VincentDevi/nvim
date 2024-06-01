@@ -2,6 +2,9 @@ return {
 	"nvim-treesitter/nvim-treesitter",
 	config = function()
 		require("nvim-treesitter").setup({
+			opts = {
+				autotag = { enable = true },
+			},
 			ensure_installed = {
 				"rust",
 				"lua",
