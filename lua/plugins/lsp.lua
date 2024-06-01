@@ -53,6 +53,8 @@ return {
 				"gopls",
 				"htmx",
 				"svelte",
+				"elmls",
+				"jsonls",
 			},
 			handlers = {
 				lsp_zero.default_setup,
