@@ -12,18 +12,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("keymaps")
+require("config")
 require("lazy").setup({
 	{ import = "plugins" },
 })
 
--- Show Line Number --
-vim.wo.number = true
-
 -- Set Theme --
 vim.cmd.colorscheme("catppuccin")
-
--- Inlay Hint --
-vim.lsp.inlay_hint.enable(true, nil)
-
--- Yank copy to clipboard ( copy and paste for your computer is the same in Neovim ) --
-vim.opt.clipboard = "unnamedplus"
