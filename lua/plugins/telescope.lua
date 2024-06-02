@@ -10,9 +10,19 @@ return {
 		local keymap = vim.keymap
 
 		keymap.set("n", "<leader>ff", builtin.find_files, {})
+		keymap.set("n", "<leader>fw", builtin.grep_string, {})
 		keymap.set("n", "<leader>fg", builtin.live_grep, {})
 		keymap.set("n", "<leader>fb", builtin.buffers, {})
+		keymap.set("n", "<leader>fs", builtin.git_status, {})
 		keymap.set("n", "<leader>fh", builtin.help_tags, {})
+
+		-- Telescope setup with ignore patterns
+		require("telescope").setup({
+			defaults = {
+				file_ignore_patterns = { "node_modules", "target" },
+			},
+		})
+
 		-- basic telescope configuration
 		local conf = require("telescope.config").values
 		local function toggle_telescope(harpoon_files)

@@ -31,7 +31,7 @@ return {
 		vim.keymap.set("n", "<leader>lt", function()
 			toggle_telescope(harpoon:list())
 		end)
-		vim.keymap.set("n", "<leader>l", function()
+		vim.keymap.set("n", "<leader>lh", function()
 			harpoon.ui:toggle_quick_menu(harpoon:list())
 		end)
 	end,

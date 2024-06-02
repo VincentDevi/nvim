@@ -12,9 +12,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("keymaps")
+require("config")
 require("lazy").setup({
 	{ import = "plugins" },
 })
-vim.wo.number = true
+
+-- Set Theme --
 vim.cmd.colorscheme("catppuccin")
-vim.lsp.inlay_hint.enable(true, nil)
