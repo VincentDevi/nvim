@@ -11,6 +11,9 @@ return {
 				side = "right",
 				width = 75,
 			},
+			filters = {
+				dotfiles = false,
+			},
 		})
 
 		-- Set Keymaps --
