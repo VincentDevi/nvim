@@ -10,7 +10,19 @@ return {
 			-- Customize or remove this keymap to your liking
 			"<leader>f",
 			function()
-				require("conform").format({ async = true, lsp_fallback = true })
+				local conform = require("conform")
+				conform.format({ async = true, lsp_fallback = true })
+				-- Customize the "injected" formatter
+				conform.formatters.injected = {
+					-- Set the options field
+					options = {
+						-- Set individual option values
+						ignore_errors = true,
+						lang_to_formatters = {
+							json = { "jq" },
+						},
+					},
+				}
 			end,
 			mode = "",
 			desc = "Format buffer",
@@ -23,6 +35,7 @@ return {
 			javascript = { { "prettierd", "prettier" } },
 			typescript = { { "prettierd", "prettier" } },
 			svelte = { { "prettierd", "prettier" } },
+			json = { { "jq", "prettierd", "prettier" } },
 			rust = { "rustfmt" },
 		},
 		-- Set up format-on-save
@@ -31,6 +44,15 @@ return {
 		formatters = {
 			shfmt = {
 				prepend_args = { "-i", "2" },
+			},
+			jq = {
+				prepend_args = { "--indent", "2" },
+			},
+			prettier = {
+				extra_args = { "--tab-width", "2" },
+			},
+			prettierd = {
+				extra_args = { "--tab-width", "2" },
 			},
 		},
 	},

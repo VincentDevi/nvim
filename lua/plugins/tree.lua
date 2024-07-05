@@ -12,13 +12,13 @@ return {
 				width = 75,
 			},
 			filters = {
-				dotfiles = false,
+				dotfiles = true,
 			},
 		})
 
 		-- Set Keymaps --
 		local keymap = vim.keymap
-		keymap.set("n", "<leader>r", ":NvimTreeToggle<CR>")
-		keymap.set("n", "<leader>ee", ":NvimTreeFocus<CR>")
+		keymap.set("n", "<leader>r", "<CMD>:NvimTreeToggle<CR>")
+		keymap.set("n", "<leader>ee", "<CMD>:NvimTreeFocus<CR>")
 	end,
 }
