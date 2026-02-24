@@ -1,65 +1,81 @@
 return {
-	"VonHeikemen/lsp-zero.nvim",
-	branch = "v3.x",
-	dependencies = {
+	{
 		"neovim/nvim-lspconfig",
-		{
-			"williamboman/mason.nvim",
-			build = function()
-				pcall(vim.cmd, "MasonUpdate")
-			end,
+		dependencies = {
+			{ "williamboman/mason.nvim", build = ":MasonUpdate" },
+			"williamboman/mason-lspconfig.nvim",
+			"hrsh7th/nvim-cmp",
+			"hrsh7th/cmp-nvim-lsp",
+			"L3MON4D3/LuaSnip",
+			{ "mrcjkb/rustaceanvim",     version = "^4",        lazy = false },
 		},
-		"hrsh7th/cmp-nvim-lsp",
-		"williamboman/mason-lspconfig.nvim",
-		"hrsh7th/nvim-cmp",
-		"L3MON4D3/LuaSnip",
-		{
-			"mrcjkb/rustaceanvim",
-			version = "^4",
-			lazy = false, -- This plugin is already lazy
-		},
-	},
-	config = function()
-		local lsp_zero = require("lsp-zero")
+		config = function()
+			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-		lsp_zero.on_attach(function(client, bufnr)
-			local opts = { buffer = bufnr, remap = false }
-			vim.keymap.set("n", "K", function()
-				vim.lsp.buf.hover()
-			end, vim.tbl_deep_extend("force", opts, { desc = "LSP Hover" }))
-		end)
-		-- Rust LSP configuration --
+			-- Replaces lsp_zero.on_attach
+			vim.api.nvim_create_autocmd("LspAttach", {
+				callback = function(args)
+					local opts = { buffer = args.buf, remap = false }
+					vim.keymap.set("n", "K", vim.lsp.buf.hover,
+						vim.tbl_extend("force", opts, { desc = "LSP Hover" }))
+					vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references,
+						vim.tbl_extend("force", opts, { desc = "Find References" }))
+					vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition,
+						vim.tbl_extend("force", opts, { desc = "Go To Definition" }))
+				end,
+			})
 
-		vim.g.rustaceanvim = {
-			server = {
-				capabilities = lsp_zero.get_capabilities(),
-			},
-			default_settings = {
-				-- rust-analyzer language server configuration
-				["rust-analyzer"] = {
-					check = {
-						command = "clippy",
+			-- rustaceanvim manages rust_analyzer, so we just pass capabilities
+			vim.g.rustaceanvim = {
+				server = { capabilities = capabilities },
+				default_settings = {
+					["rust-analyzer"] = {
+						check = { command = "clippy" },
 					},
 				},
-			},
-		}
-		require("mason").setup()
-		require("mason-lspconfig").setup({
-			ensure_installed = {
-				"lua_ls",
-				"rust_analyzer",
-				"tsserver",
-				"tailwindcss",
-				"gopls",
-				"htmx",
-				"svelte",
-				"elmls",
-				"jsonls",
-			},
-			handlers = {
-				lsp_zero.default_setup,
-				rust_analyzer = lsp_zero.noop,
-			},
-		})
-	end,
+			}
+
+			require("mason").setup()
+
+			-- Let mason-lspconfig ensure servers are installed
+			require("mason-lspconfig").setup({
+				automatic_installation = true,
+				ensure_installed = {
+					"lua_ls",
+					"tailwindcss",
+					"htmx",
+					"jsonls",
+					"gopls",
+					-- rust_analyzer still installed via mason but managed by rustaceanvim
+					"rust_analyzer",
+					"intelephense",
+				},
+			})
+
+			-- Server configs: add any server-specific options here
+			local servers = {
+				lua_ls = {},
+				gopls = {},
+				jsonls = {},
+				tailwindcss = {
+					filetypes = {
+						"html", "javascriptreact", "typescriptreact",
+						"vue", "svelte", "rust", "go",
+					},
+					init_options = {
+						userLanguages = { rust = "html" },
+					},
+				},
+				htmx = {
+					filetypes = { "html", "htmx" },
+				},
+			}
+
+			for server, config in pairs(servers) do
+				config.capabilities = capabilities
+				vim.lsp.config(server, config)
+				vim.lsp.enable(server)
+			end
+		end,
+	},
 }
